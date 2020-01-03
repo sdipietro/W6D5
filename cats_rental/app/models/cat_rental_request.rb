@@ -27,7 +27,7 @@ class CatRentalRequest < ApplicationRecord
         foreign_key: :cat_id
 
     def overlapping_requests
-        requests = 
+        requests = CatRentalRequests.select(*).where("cat_id = self.cat_id AND #{self.start_date} < start_date")
     end
 
 end
