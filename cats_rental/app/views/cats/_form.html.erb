@@ -1,0 +1,52 @@
+<% if cat.persisted? %>
+    <% action = cat_url(cat.id) %>
+    <% method_override = "PUT" %>
+    <% button_text = "Update cat!" %>
+<% else %>
+    <% action = cats_url %>
+    <% method_override = "POST" %>
+    <% button_text = "Create cat!" %>
+<% end %>
+
+<form action="<%= action %>" method="POST">
+    <input type="hidden" name="_method" value=<%= method_override %>>
+
+    <label>Name
+        <input type="text" name="cat[name]" value="<%=@cat.name%>">
+    </label>
+
+    <br>
+
+    <label>Sex
+        <input type="radio" name="cat[sex]" value="M" <%= "checked" if @cat.sex == "M" %>>M
+        <input type="radio" name="cat[sex]" value="F" <%= "checked" if @cat.sex == "F" %>>F
+    </label>
+
+    <br>
+
+    <label>Color
+        <select name="cat[color]">
+            <option value="">--select a color--</option>
+            <% Cat.colors.each do |color| %>
+                <option value="<%= color %>" <%= "selected" if @cat.color == color %>><%= color.capitalize %></option>
+            <% end %>
+        </select>
+    </label>
+
+    <br>
+
+    <label>Birth Date
+        <input type="date" name="cat[birthdate]" value="<%= @cat.birthdate %>">
+    </label>
+
+    <br>
+
+    <label>Desciption <br>
+        <textarea name="cat[description]" id="" cols="30" rows="10"><%=@cat.description%></textarea>
+    </label>
+
+    <br>
+
+    <input type="submit" value=<%= button_text %>>
+
+</form>

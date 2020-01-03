@@ -29,6 +29,11 @@ class Cat < ApplicationRecord
     validates :color, inclusion: { in: Cat.colors, message: "%{value} is not a valid color" }
     validates :sex, inclusion: { in: %w(M F), message: "We're not that progressive. Please include either M or F."}
 
+    has_many :rental_requests,
+        class_name: :CatRentalRequest,
+        primary_key: :id,
+        foreign_key: :cat_id,
+        dependent: :destroy
 
     def age
         age = Date.today.year - self.birthdate.year
